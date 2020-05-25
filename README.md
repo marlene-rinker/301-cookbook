@@ -118,7 +118,6 @@ Acceptance tests:
 
 
 ### Database Entity Relationship
-<!-- TODO: we will have one database, need a diagram of the table? also need to mention the schema -->
 
-Coming soon!
+![Relational-Diagram-DB](public/styles/imgs/db-relational-dia.PNG)
 
