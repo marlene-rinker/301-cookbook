@@ -15,9 +15,9 @@ The Digital Cookbook is an app that allows you to find recipes and save them for
 Coming soon!
 
 ## Wireframes
-<!-- TODO: Mason has this. -->
 
-Coming soon!
+![WireFrame](public/styles/imgs/final-wireframe.PNG)
+
 
 ## User Stories
 [Link to Trello Board](https://trello.com/b/ZByT6NRl/super-cookbook)
@@ -113,11 +113,11 @@ Acceptance tests:
 - The app looks good on both mobile and larger screens.
 
 ### Domain Modeling
-<!-- TODO: Domain model image goes here -->
-Coming soon!
+
+![WRRC-Domain-Model](public/styles/imgs/wrrc-superdex-cookbook.PNG)
+
 
 ### Database Entity Relationship
-<!-- TODO: we will have one database, need a diagram of the table? also need to mention the schema -->
 
-Coming soon!
+![Relational-Diagram-DB](public/styles/imgs/db-relational-dia.PNG)
 
