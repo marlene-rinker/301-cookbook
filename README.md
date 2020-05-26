@@ -114,10 +114,10 @@ Acceptance tests:
 
 ### Domain Modeling
 
-![WRRC-Domain-Model](public/styles/imgs/wrrc-superdex-cookbook.PNG)
+![WRRC-Domain-Model](public/styles/imgs/wrrc-revised-superdex.PNG)
 
 
 ### Database Entity Relationship
 
-![Relational-Diagram-DB](public/styles/imgs/db-relational-dia.PNG)
+![Relational-Diagram-DB](public/styles/imgs/revised-db-relation.PNG)
 
