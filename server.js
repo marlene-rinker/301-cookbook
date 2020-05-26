@@ -7,10 +7,10 @@ require('dotenv').config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
-const methodOverride = require(method-override);
+const methodOverride = require('method-override');
 
 app.set('view engine', 'ejs');
-app.use(express.urlunencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true}));
 app.use(express.static('./public'));
 app.use(methodOverride('_overrideMethod'));
 const client = new pg.Client(process.env.DATABASE_URL);
