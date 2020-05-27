@@ -1,6 +1,7 @@
 <!-- this is the home page -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,38 +14,50 @@
 
 <body>
   
-  <%- include('../layout/header.ejs') %>
+    <%- include('layout/header.ejs') %>
 
-  <section id="search">
-    <div class="wrapper">
-      <% superdexArray.forEach(recipe => { %>
-
+    <section id="user-guide">
         <div class="box">
-         <form action="/pages/show" method="POST">
-            <label for="search" name="search">
-            <input type="text" name="search">
-            <input type="submit">
-         </form>
-          
+            <p> Welcome to SuperDex CookBook </p>
         </div>
-        
-      <% }) %>
-    </div>
+    </section>
 
-  </section>>
+    <section id="interface">
 
-  <section id="my_superdex">
-    <div class="wrapper">
-      <% superdexArray.forEach(recipe => { %>
+        <div class="wrapper">
+            
+            <div class="box">
+            
+                <form action="/pages/show" method="POST">
+                    <fieldset id="search">
 
-        <div class="box">
-          <img src="<%=recipe.image %>"/>
-          
+                        <legend> Rummage Through Our Pantry </legend>
+                        <label for="search"> Rummage </label>
+                        <input type="text" name="search" required>
+            
+                    </fieldset>
+                </form>
+                
+            </div>
+
+            <div class="box">
+                <a href="/pages/show" rel="access-cookBook"> My SuperDex </a>
+            </div>
+            
+            <div class="box"> 
+      
+                <div class="box">
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.splendidtable.org%2Frecipes%2Fpesto-alla-genovese&psig=AOvVaw2__-eTwLQa5ohIHnz4oDYp&ust=1590621449634000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJiryezU0ukCFQAAAAAdAAAAABAD"/>
+                </div>
+                      
+            </div>
+            
         </div>
-        
-      <% }) %>
-    </div>
-  </section>>
+
+    </section>
+
+    <%- include('layout/footer.ejs') %>
   
 </body>
+
 </html>
