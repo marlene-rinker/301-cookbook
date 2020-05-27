@@ -15,8 +15,15 @@ function setEventListeners() {
 
 function saveIt(event){
   event.preventDefault();
-  console.log(event.target.title);
-  $.post('/test', {}, function(){
+  let result = event.target;
+  console.log(event.target.title.value);
+  $.post('/test', {title: result.title.value,
+    image: result.image.value,
+    sourceUrl: result.sourceUrl.value,
+    readyInMinutes: result.readyInMinutes.value,
+    servings: result.servings.value,
+    id: result.api_id.value },
+  function(){
     alert('The recipe was saved.');
   });
 }
