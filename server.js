@@ -18,7 +18,7 @@ app.use(methodOverride('_overrideMethod'));
 // client.connect();
 
 app.get('/', (request, response) => {
-    response.render('pages/index');
+  response.render('pages/index');
 });
 
 app.listen(PORT, console.log(`running on ${PORT}`));
