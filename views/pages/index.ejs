@@ -1,1 +1,63 @@
 <!-- this is the home page -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Superdex Cookbook</title>
+  <link rel="stylesheet" href="/styles/base.css"/>
+  <link rel="stylesheet" href="/styles/layout.css"/>
+  <link rel="stylesheet" href="/styles/modules.css"/>
+  <link rel="stylesheet" href="/styles/reset.css"/>
+</head>
+
+<body>
+  
+    <%- include('layout/header.ejs') %>
+
+    <section id="user-guide">
+        <div class="box">
+            <p> Welcome to SuperDex CookBook </p>
+        </div>
+    </section>
+
+    <section id="interface">
+
+        <div class="wrapper">
+            
+            <div class="box">
+            
+                <form action="/pages/show" method="POST">
+                    <fieldset id="search">
+
+                        <legend> Rummage Through Our Pantry </legend>
+                        <label for="search"> Rummage </label>
+                        <input type="text" name="search" required>
+            
+                    </fieldset>
+                </form>
+                
+            </div>
+
+            <div class="box">
+                <a href="/pages/show" rel="access-cookBook"> My SuperDex </a>
+            </div>
+            
+            <div class="box"> 
+      
+                <div class="box">
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.splendidtable.org%2Frecipes%2Fpesto-alla-genovese&psig=AOvVaw2__-eTwLQa5ohIHnz4oDYp&ust=1590621449634000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJiryezU0ukCFQAAAAAdAAAAABAD"/>
+                </div>
+                      
+            </div>
+            
+        </div>
+
+    </section>
+
+    <%- include('layout/footer.ejs') %>
+  
+</body>
+
+</html>
