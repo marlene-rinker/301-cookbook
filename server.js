@@ -30,63 +30,65 @@ app.get('/', (req, res) => res.render('pages/index'))
 //=== the functions contained within will be later extracted into a module. 
 app.post('/search', searchResults)
 
-app.get('/pages/show', (req, res) => res.render('pages/show'))
+app.get('/show', (req, res) => res.render('show.ejs'))
 
-//== TODO: Constructor for Recipe Object ==//
-
-function RecipeCard(apiObj){
-  const card = apiObj.results;
+//== Constructor for Recipe Object ==//
+// image size options 90x90, 240x150, 312x150
+// the img extension can be found at the end of the card.image value, if we need to make this dynamic we can use a function to pull the extention and pass it in to the template literal
  
-  this.title = card.title;
-  this.image = card.image ? card.image : 'public/styles/imgs/alt-image-lorempixel.jpg'; //!!! we may need to check the <type> of this return, is it an actual image asset? or a minified link to an image asset
-  this.sourceUrl = card.sourceUrl ? httpSecure(card.sourceUrl) : 'We\'re sorry, that is unavailable at this time.';
-  this.readyInMinutes = card.readyInMinutes;
-  this.servings = card.servings;
+function RecipeCard(apiObj){
+ 
+ 
+  this.title = apiObj.title;
+  this.image = apiObj.image ? ` https://spoonacular.com/recipeImages/${this.api_id}-240x150.` : 'public/styles/imgs/alt-image-lorempixel.jpg';
+  this.sourceUrl = apiObj.sourceUrl ? httpSecure(apiObj.sourceUrl) : 'We\'re sorry, that is unavailable at this time.';
+  this.readyInMinutes = apiObj.readyInMinutes;
+  this.servings = apiObj.servings;
   this.foreignKey;
-  this.api_id = card.id // this may be most useful if we open the option to search further details on a saved recipe, allowing us to make single api calls for each purpose instead of needing more than one. 
+  this.api_id = apiObj.id // this may be most useful if we open the option to search further details on a saved recipe, allowing us to make single api calls for each purpose instead of needing more than one. 
   
 }
 
-//== TODO:  Constructor Method for Query Object ==//
+//== Constructor Method for Query Object ==//
 
 RecipeCard.Query = function (req, res){
+  
   this.apiKey = process.env.SPOONTACULAR_API_KEY;
   this.query = req.body.search;
-  this.number = 10; // may be made dynamic if future patches allow filtering number of results. 
-  this.type = 'application/json'
-
+  this.number = 1; // may be made dynamic if future patches allow filtering number of results. 
 }
 
 
 //=== !!! Callback for app.post(/search)==//
 function searchResults(req, res){
+  // console.log('req.body@ searchResults:server.js-->', req.body)//[x] returns:{search : 'meatloaf'}
   const spoonUrl = 'https://api.spoonacular.com/recipes/search';
   const query = new RecipeCard.Query(req);
-
-  console.log('req.body', req.body)
-  console.log('req.params', req.body.params)
-  console.log('req.query', req.body.query)
+  
   superagent.get(spoonUrl)
+    .set( 'Content-Type', 'application/json')
+    .accept('application/json')
     .query(query)
     .then(list => compileList(list))
-    .then(menu => renderMenu(menu))
+    .then(menu => renderMenu(req, res, menu))
     .catch(error => errorCatch(req, res, error, 'pages/error.ejs'))
 };
 
-//== Runs respons from api through constructor and returns: array of object literals. 
+//== Runs response from api through constructor and returns: array of object literals. 
 function compileList(list){
-  const menu = list.body.results.map(curr => new RecipeCard(curr));
+  //[x] console.log('list.body.results[0] @ compileList:server.js-->', list.body.results[0]);
+  const menu = list.body.results.map(curr => new RecipeCard(curr))
   return menu; 
 }
 
 
-//== passes object literal to the show route for use by ejs. returns: objectLiteral with property list value is array of objectLiterals. 
-function renderMenu(req, res, menu){
-  res.render('/pages/show', {'list' : menu});
+//== passes object literal to the show route for use by ejs. returns: objectLiteral format--> { list : [ {},{}...{} ] }. 
+function renderMenu(res, menu){
+  // console.log('menu @renderMenu:server.js', menu)
+  res.render('./pages/show', {'list' : menu});
 }
 //==!!! FUNCTION TO APPLY SECURED PROTOCOL TO URLS=== inputReq: url <string> !!!//
 //
-
 function httpSecure(url){
   if(url.charAt(4) !== 's'){  
    return `https${url.slice(4)}` 
