@@ -19,12 +19,20 @@ client.on('error', console.error);
 client.connect();
 
 //routes
-
-app.post('/save', saveRecipe);
+app.get('/', showHome);
+app.get('/test',(req, res)=>{
+  res.render('pages/test.ejs');
+})
+app.post('/test', saveRecipe);
+app.delete('/test', deleteRecipe);
 
 
 
 //functions
+
+function showHome(req, res) {
+  res.render('pages/index.ejs');
+}
 
 function saveRecipe(req, res) {
   console.log('saving on server');
@@ -39,9 +47,18 @@ function saveRecipe(req, res) {
     })
 }
 
+function deleteRecipe(req, res) {
+  console.log(req.body);
+  console.log('deleting on server');
+  client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
+    .then(() => {
+      res.send()
+    })
+    .catch(error => {
+      console.log(error);
+    })
+}
 
-app.get('/', (request, response) => {
-    response.render('pages/index');
-});
+
 
 app.listen(PORT, console.log(`running on ${PORT}`));
