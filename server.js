@@ -41,7 +41,11 @@ function saveRecipe(req, res) {
 
 
 app.get('/', (request, response) => {
-    response.render('pages/index');
+  response.render('pages/index');
+});
+
+app.get('/about', (request, response) => {
+  response.render('pages/about_us');
 });
 
 app.listen(PORT, console.log(`running on ${PORT}`));
