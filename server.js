@@ -5,7 +5,7 @@ const superagent = require('superagent');
 const pg = require('pg');
 require('dotenv').config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const methodOverride = require('method-override');
 const cors = require('cors');
@@ -100,5 +100,8 @@ function errorCatch(req, res, error, path){
   res.render(`${path}`, {'error': error});
 }
 
+app.get('/', (request, response) => {
+    response.render('pages/index');
+});
 
 app.listen(PORT, console.log(`running on ${PORT}`));
