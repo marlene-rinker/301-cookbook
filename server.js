@@ -20,11 +20,8 @@ client.connect();
 
 //routes
 app.get('/', showHome);
-app.get('/test',(req, res)=>{
-  res.render('pages/test.ejs');
-})
-app.post('/test', saveRecipe);
-app.delete('/test', deleteRecipe);
+app.post('/save', saveRecipe);
+app.delete('/delete', deleteRecipe);
 
 
 
@@ -35,7 +32,6 @@ function showHome(req, res) {
 }
 
 function saveRecipe(req, res) {
-  console.log('saving on server');
   const sqlQuery = 'INSERT INTO recipes (title, image, sourceUrl, readyInMinutes, servings, api_id) VALUES ($1, $2, $3, $4, $5, $6)';
   const sqlValues = [req.body.title, req.body.image, req.body.sourceUrl, req.body.readyInMinutes, req.body.servings, req.body.id];
   client.query(sqlQuery, sqlValues)
@@ -43,19 +39,17 @@ function saveRecipe(req, res) {
       res.send();
     })
     .catch(error => {
-      console.log(error);
+      errorCatch(req, res, error, 'pages/error.ejs');
     })
 }
 
 function deleteRecipe(req, res) {
-  console.log(req.body);
-  console.log('deleting on server');
   client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
     .then(() => {
       res.send()
     })
     .catch(error => {
-      console.log(error);
+      errorCatch(req, res, error, 'pages/error.ejs');
     })
 }
 

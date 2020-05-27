@@ -17,7 +17,7 @@ $('#message').hide();
 function saveIt(event){
   event.preventDefault();
   let result = event.target;
-  $.post('/test', {title: result.title.value,
+  $.post('/save', {title: result.title.value,
     image: result.image.value,
     sourceUrl: result.sourceUrl.value,
     readyInMinutes: result.readyInMinutes.value,
@@ -33,8 +33,7 @@ function saveIt(event){
 function deleteIt(event){
   event.preventDefault();
   let result = event.target;
-  console.log(event.target.id.value, event.target.title.value);
-  $.post('/test?_overrideMethod=DELETE', {id: result.id.value},
+  $.post('/delete?_overrideMethod=DELETE', {id: result.id.value},
     function(){
       $('#message').show();
       $('#message').text(`${result.title.value} was deleted from your Superdex.`);
