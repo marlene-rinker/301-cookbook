@@ -19,15 +19,21 @@ client.on('error', console.error);
 client.connect();
 
 //routes
-
+app.get('/', showHome);
 app.post('/save', saveRecipe);
-
+app.delete('/delete', deleteRecipe);
+app.get('/about', (request, response) => {
+  response.render('pages/about_us');
+});
 
 
 //functions
 
+function showHome(req, res) {
+  res.render('pages/index.ejs');
+}
+
 function saveRecipe(req, res) {
-  console.log('saving on server');
   const sqlQuery = 'INSERT INTO recipes (title, image, sourceUrl, readyInMinutes, servings, api_id) VALUES ($1, $2, $3, $4, $5, $6)';
   const sqlValues = [req.body.title, req.body.image, req.body.sourceUrl, req.body.readyInMinutes, req.body.servings, req.body.id];
   client.query(sqlQuery, sqlValues)
@@ -35,17 +41,20 @@ function saveRecipe(req, res) {
       res.send();
     })
     .catch(error => {
-      console.log(error);
+      errorCatch(req, res, error, 'pages/error.ejs');
+    })
+}
+
+function deleteRecipe(req, res) {
+  client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
+    .then(() => {
+      res.send()
+    })
+    .catch(error => {
+      errorCatch(req, res, error, 'pages/error.ejs');
     })
 }
 
 
-app.get('/', (request, response) => {
-  response.render('pages/index');
-});
-
-app.get('/about', (request, response) => {
-  response.render('pages/about_us');
-});
 
 app.listen(PORT, console.log(`running on ${PORT}`));

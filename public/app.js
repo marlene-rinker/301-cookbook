@@ -9,6 +9,7 @@
 // });
 function setEventListeners() {
   $('#save-form').on('submit', saveIt);
+  $('#delete-form').on('submit', deleteIt);
 }
 
 $('#message').hide();
@@ -16,7 +17,6 @@ $('#message').hide();
 function saveIt(event){
   event.preventDefault();
   let result = event.target;
-  console.log(event.target.title.value);
   $.post('/save', {title: result.title.value,
     image: result.image.value,
     sourceUrl: result.sourceUrl.value,
@@ -28,6 +28,17 @@ function saveIt(event){
     $('#message').text(`${result.title.value} was saved to your Superdex.`);
     setInterval(function(){$('#message').hide();}, 5000);
   });
+}
+
+function deleteIt(event){
+  event.preventDefault();
+  let result = event.target;
+  $.post('/delete?_overrideMethod=DELETE', {id: result.id.value},
+    function(){
+      $('#message').show();
+      $('#message').text(`${result.title.value} was deleted from your Superdex.`);
+      setInterval(function(){$('#message').hide();}, 5000);
+    });
 }
 
 setEventListeners();
