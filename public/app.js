@@ -11,7 +11,7 @@ function setEventListeners() {
   $('#save-form').on('submit', saveIt);
 }
 
-
+$('#message').hide();
 
 function saveIt(event){
   event.preventDefault();
@@ -24,7 +24,9 @@ function saveIt(event){
     servings: result.servings.value,
     id: result.api_id.value },
   function(){
-    alert('The recipe was saved.');
+    $('#message').show();
+    $('#message').text(`${result.title.value} was saved to your Superdex.`);
+    setInterval(function(){$('#message').hide();}, 5000);
   });
 }
 

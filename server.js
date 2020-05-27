@@ -37,7 +37,7 @@ function saveRecipe(req, res) {
   const sqlValues = [req.body.title, req.body.image, req.body.sourceUrl, req.body.readyInMinutes, req.body.servings, req.body.id];
   client.query(sqlQuery, sqlValues)
     .then (() => {
-      res.send('The recipe was saved.');
+      res.send();
     })
     .catch(error => {
       console.log(error);
