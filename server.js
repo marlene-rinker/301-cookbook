@@ -18,15 +18,9 @@ client.on('error', console.error);
 client.connect();
 
 //routes
-app.get('/test',(req, res)=>{
-  res.render('pages/test.ejs');
-})
-app.post('/test', saveRecipe);
-// app.post('/save', saveRecipe);
-// app.get('/test',(req, res) => {
-//   // res.send('The recipe was saved')
-//   res.render('pages/show.ejs', {message: 'The recipe was saved'})
-// });
+
+app.post('/save', saveRecipe);
+
 
 
 //functions

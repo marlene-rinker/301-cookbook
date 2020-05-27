@@ -1,4 +1,36 @@
 <!-- this page will show the saved recipes to the user - it will use the card.ejs to display the recipe information  -->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <p id="message">Message</p>
 
+
+  
+  <form id="save-form" action="/save" method="POST">
+      <fieldset>
+        <label for="title">Title</label>
+        <input type="hidden", name="title", value="">
+        <label for="image">image</label>
+        <input type="hidden", name="image", value="">
+        <label for="sourceUrl">sourceURL</label>
+        <input type="hidden", name="sourceUrl", value="">
+        <label for="readyInMinutes">readyInMinutes</label>
+        <input type="hidden", name="readyInMinutes", value="">
+        <label for="servings">servings</label>
+        <input type="hidden", name="servings", value="">
+        <input type="hidden", name="api_id", value="">
+        <input type="submit" value="Save Recipe">
+  </form>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/app.js"></script>
+  
+</body>
+</html>
 

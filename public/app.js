@@ -17,7 +17,7 @@ function saveIt(event){
   event.preventDefault();
   let result = event.target;
   console.log(event.target.title.value);
-  $.post('/test', {title: result.title.value,
+  $.post('/save', {title: result.title.value,
     image: result.image.value,
     sourceUrl: result.sourceUrl.value,
     readyInMinutes: result.readyInMinutes.value,
