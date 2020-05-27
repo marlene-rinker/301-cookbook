@@ -38,7 +38,6 @@ app.get('/show', (req, res) => res.render('show.ejs'))
  
 function RecipeCard(apiObj){
  
- 
   this.title = apiObj.title;
   this.image = apiObj.image ? ` https://spoonacular.com/recipeImages/${this.api_id}-240x150.` : 'public/styles/imgs/alt-image-lorempixel.jpg';
   this.sourceUrl = apiObj.sourceUrl ? httpSecure(apiObj.sourceUrl) : 'We\'re sorry, that is unavailable at this time.';
@@ -81,11 +80,10 @@ function compileList(list){
   return menu; 
 }
 
-
 //== passes object literal to the show route for use by ejs. returns: objectLiteral format--> { list : [ {},{}...{} ] }. 
 function renderMenu(res, menu){
   // console.log('menu @renderMenu:server.js', menu)
-  res.render('./pages/show', {'list' : menu});
+  res.render('./pages/show', {'list' : menu , 'showResults': true});
 }
 //==!!! FUNCTION TO APPLY SECURED PROTOCOL TO URLS=== inputReq: url <string> !!!//
 //
