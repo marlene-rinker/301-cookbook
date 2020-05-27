@@ -22,7 +22,9 @@ client.connect();
 app.get('/', showHome);
 app.post('/save', saveRecipe);
 app.delete('/delete', deleteRecipe);
-
+app.get('/about', (request, response) => {
+  response.render('pages/about_us');
+});
 
 
 //functions
