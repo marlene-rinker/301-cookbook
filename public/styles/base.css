@@ -7,3 +7,9 @@ section {
     border-style: solid;
     border-color: rgb(172, 214, 35)
 }
+
+.bio {
+    background-repeat: no-repeat;
+    background-image: url('styles/imgs/recipe_card.png');
+    text-align: left;
+}
