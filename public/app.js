@@ -35,9 +35,11 @@ function deleteIt(event){
   let result = event.target;
   $.post('/delete?_overrideMethod=DELETE', {id: result.id.value},
     function(){
+      event.target.parentElement.remove();
       $('#message').show();
       $('#message').text(`${result.title.value} was deleted from your Superdex.`);
-      setInterval(function(){$('#message').hide();}, 5000);
+      setInterval(function(){$('#message').hide();}, 3000);
+      setInterval(function(){location.reload()}, 3000);
     });
 }
 
