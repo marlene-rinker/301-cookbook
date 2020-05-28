@@ -50,7 +50,9 @@ function showHome(req, res) {
 //==[x] Constructor for Recipe Object ==//
 // image size options 90x90, 240x150, 312x150
 
+
 function RecipeCard(apiObj){
+
   this.title = apiObj.title;
   this.image = apiObj.image ? ` https://spoonacular.com/recipeImages/${this.api_id}-240x150.` : 'public/styles/imgs/alt-image-lorempixel.jpg';
   this.sourceUrl = apiObj.sourceUrl ? httpSecure(apiObj.sourceUrl) : 'We\'re sorry, that is unavailable at this time.';
@@ -61,8 +63,10 @@ function RecipeCard(apiObj){
   
 }
 
-//==[x] Constructor Method for Query Object ==//
-RecipeCard.Query = function (req, res){
+//== Constructor Method for Query Object ==//
+
+RecipeCard.Query = function (req, res) {
+
   this.apiKey = process.env.SPOONACULAR_API_KEY;
   this.query = req.body.search;
   this.number = 1; // may be made dynamic if future patches allow filtering number of results. 
@@ -72,8 +76,9 @@ RecipeCard.Query = function (req, res){
 function searchResults(req, res){
   const spoonUrl = 'https://api.spoonacular.com/recipes/search';
   const query = new RecipeCard.Query(req);
+
   superagent.get(spoonUrl)
-    .set( 'Content-Type', 'application/json')
+    .set('Content-Type', 'application/json')
     .accept('application/json')
     .query(query)
     .then(list => compileList(list))
@@ -83,25 +88,26 @@ function searchResults(req, res){
 
 //== [x] Runs response from api through constructor and returns: array of object literals. 
 function compileList(list){
+
   const menu = list.body.results.map(curr => new RecipeCard(curr))
-  return menu; 
+  return menu;
 }
 
 //== [x] Sends results from API  to show.ejs //
 function renderMenu(res, menu){
-  // console.log('menu @renderMenu:server.js', menu)
-  res.render('./pages/show', {'list' : menu , 'showResults': true});
+   res.render('./pages/show', { 'list': menu, 'showResults': true });
 }
 
-
 //!!!TODO: modulation requires small refactoring, mostly turning the anonymous arrow function @ app.get('/about') into a callback that calls the randomBios function and returns it's result to the page using it's existing res.render() method and path. 
-const marlene = { name: 'Marlene Rinker', image: 'styles/imgs/MRinker_photo.jpeg', bio: 'I’m a Full-stack JavaScript software developer with a background in instructional design, technical writing, QA, and accounting. I love collaborating with others to create a great customer experience. In my past roles, I helped customers though documentation, training, and testing. Now, as a software developer, I get to help customers by influencing how the software is built.' };
 
-const mason = { name: 'Mason Fryberger', image: 'styles/imgs/Mason.jpeg', bio: 'RTS gamer (the real kind, not mobile wannabes) Nickname from construction crew \"fishhook\", Favorite quote right now: "sometimes you win, sometimes you learn, fail forward" ~John C Maxwell~' };
 
-const david = { name: 'David Palagashvili', image: 'styles/imgs/David.jpg', bio: '' };
+const marlene = { name: 'Marlene Rinker', image: 'styles/imgs/MRinker_photo.jpeg', bio: 'I’m a Full-stack JavaScript software developer with a background in instructional design, technical writing, QA, and accounting. I love collaborating with others to create a great customer experience. In my past roles, I helped customers though documentation, training, and testing. Now, as a software developer, I get to help customers by influencing how the software is built.', link: 'https://www.linkedin.com/in/marlenerinker/' };
 
-const wolfe = { name: 'Dave Wolfe', image: 'styles/imgs/Dave.jpg', bio: 'I am a Full Stack JavaScript Developer with a background in sales, customer service, and Quality Assurance for mobile and desktop applications. I’ve owned my own business, volunteered for professional and non-professional organizations, and have experience organizing and running large events. I’m looking for a position as a front end developer, where I can utilize my skills to work directly with internal and external customers, to develop quality software. In my personal life I’m passionate about riding and working on my motorcycle.' };
+const mason = { name: 'Mason Fryberger', image: 'styles/imgs/Mason.jpeg', bio: 'RTS gamer (the real kind, not mobile wannabes) Nickname from construction crew \"fishhook\", Favorite quote right now: "sometimes you win, sometimes you learn, fail forward" ~John C Maxwell~', link: 'https://www.linkedin.com/in/mason-fryberger-ghub-mason-chance/' };
+
+const david = { name: 'David Palagashvili', image: 'styles/imgs/David.jpg', bio: 'I aim to join the ranks of a company with a national, if not global, vision for a better products, better business, and better service. Raised on 2 continents, 3 Countries, 4 Cities, 6 schools; the choice was sink or swim... and I swam. From food service to sales to middle management, I\'ve worked in several industries and held various positions to learn that a major key to success in any business is to stay at the forefront of technological development. This is evident in the exploits of companies like Amazon, Google, and Tesla to name a few. Such companies are pioneers in their own right and I wish to add to what they\'re accomplishing and help take it even further!', link: 'https://www.linkedin.com/in/david-palagashvili-35040ab0/' };
+
+const wolfe = { name: 'Dave Wolfe', image: 'styles/imgs/Dave.jpg', bio: 'I am a Full Stack JavaScript Developer with a background in sales, customer service, and Quality Assurance for mobile and desktop applications. I’ve owned my own business, volunteered for professional and non-professional organizations, and have experience organizing and running large events. I’m looking for a position as a front end developer, where I can utilize my skills to work directly with internal and external customers, to develop quality software. In my personal life I’m passionate about riding and working on my motorcycle.', link: 'https://www.linkedin.com/in/dave-wolfe623/' };
 
 function randomBios() {
   const bioArr = [marlene, mason, david, wolfe];
@@ -153,14 +159,16 @@ function deleteRecipe(req, res) {
 }
 
 
-function showSaved (req, res){
+function showSaved(req, res) {
   const sqlQuery = 'SELECT * FROM recipes';
   client.query(sqlQuery)
     .then(resultFromSql => {
       console.log(resultFromSql.rows);
+
       res.render('pages/show',{list : resultFromSql.rows, showResults: false});
     })
     .catch(error => errorCatch(req, res, error, 'pages/error.ejs'));
+
 }
 
 //==!!! FUNCTION TO APPLY SECURED PROTOCOL TO URLS=== inputReq: url <string> !!!//
@@ -178,9 +186,7 @@ function httpSecure(url){
   res.render(`${path}`, {'error': error});
 }
 
-
-
-
+const bios = randomBios();
 
 app.listen(PORT, console.log(`running on ${PORT}`));
 
