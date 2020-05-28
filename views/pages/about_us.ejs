@@ -9,31 +9,29 @@
 <body>
   <%- include('layout/header.ejs') %>
 
+  
   <div style="background-image: url('styles/imgs/recipe_card.png');">
-    <p>Marlene Rinker</p>
-    <img src="styles/imgs/MRinker_photo.jpeg" style="height: 100px;"/>
-    <p>I’m a Full-stack JavaScript software developer with a background in instructional design, technical writing, QA, and accounting. I love collaborating with others to create a great customer experience. In my past roles, I helped customers though documentation, training, and testing. Now, as a software developer, I get to help customers by influencing how the software is built.</p>
+    <p><%= bioArray[0].name %></p>
+    <img src="<%= bioArray[0].image %>" style="height: 100px;"/>
+    <p><%= bioArray[0].bio %></p>
   </div>
 
   <div style="background-image: url('styles/imgs/recipe_card.png');">
-    <p>Mason Fryberger</p>
-    <img src="styles/imgs/Mason.jpeg" style="height: 100px;"/>
-    <p>RTS gamer (the real kind, not mobile wannabes)
-      Nickname from construction crew: "fishhook"
-      Favorite quote right now "sometimes you win, sometimes you learn, fail forward" ~John C Maxwell ~</p>
+    <p><%= bioArray[1].name %></p>
+    <img src="<%= bioArray[1].image %>" style="height: 100px;"/>
+    <p><%= bioArray[1].bio %></p>
   </div>
 
   <div style="background-image: url('styles/imgs/recipe_card.png');">
-    <p>David Palagashvili</p>
-    <img src="styles/imgs/David.jpg" style="height: 100px;"/>
-    <p></p>
+    <p><%= bioArray[2].name %></p>
+    <img src="<%= bioArray[2].image %>" style="height: 100px;"/>
+    <p><%= bioArray[2].bio %></p>
   </div>
 
   <div style="background-image: url('styles/imgs/recipe_card.png');">
-    <p>Dave Wolfe</p>
-    <img src="styles/imgs/Dave.jpg" style="height: 100px;"/>
-    <p>Hello, my name is Dave Wolfe. I am a Full Stack JavaScript Developer with a background in sales, customer service, and Quality Assurance for mobile and desktop applications. I’ve owned my own business, volunteered for professional and non-professional organizations, and have experience organizing and running large events. I’m looking for a position as a front end developer, where I can utilize my skills to work directly with internal and external customers, to develop quality software. In my personal life I’m passionate about riding and working on my motorcycle.
-    </p>
+    <p><%= bioArray[3].name %></p>
+    <img src="<%= bioArray[3].image %>" style="height: 100px;"/>
+    <p><%= bioArray[3].bio %></p>
   </div>
 
 
