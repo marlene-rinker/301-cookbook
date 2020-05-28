@@ -14,6 +14,12 @@ The Digital Cookbook is an app that allows you to find recipes and save them for
 
 Coming soon!
 
+## Resources and Credits
+
+[Alt Images from lorempixel](https://lorempixel.com/)
+
+[Spoontacular API](https://spoonacular.com/)
+
 ## Wireframes
 
 ![WireFrame](public/styles/imgs/final-wireframe.PNG)
