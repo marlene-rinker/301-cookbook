@@ -36,9 +36,9 @@ app.get('/show', (req, res) => res.render('show.ejs'))
 //== Constructor for Recipe Object ==//
 // image size options 90x90, 240x150, 312x150
 // the img extension can be found at the end of the card.image value, if we need to make this dynamic we can use a function to pull the extention and pass it in to the template literal
- 
-function RecipeCard(apiObj){
- 
+
+function RecipeCard(apiObj) {
+
   this.title = apiObj.title;
   this.image = apiObj.image ? ` https://spoonacular.com/recipeImages/${this.api_id}-240x150.` : 'public/styles/imgs/alt-image-lorempixel.jpg';
   this.sourceUrl = apiObj.sourceUrl ? httpSecure(apiObj.sourceUrl) : 'We\'re sorry, that is unavailable at this time.';
@@ -46,27 +46,27 @@ function RecipeCard(apiObj){
   this.servings = apiObj.servings;
   this.foreignKey;
   this.api_id = apiObj.id // this may be most useful if we open the option to search further details on a saved recipe, allowing us to make single api calls for each purpose instead of needing more than one. 
-  
+
 }
 
 //== Constructor Method for Query Object ==//
 
-RecipeCard.Query = function (req, res){
-  
-  this.apiKey = process.env.SPOONTACULAR_API_KEY;
+RecipeCard.Query = function (req, res) {
+
+  this.apiKey = process.env.SPOONACULAR_API_KEY;
   this.query = req.body.search;
   this.number = 1; // may be made dynamic if future patches allow filtering number of results. 
 }
 
 
 //=== !!! Callback for app.post(/search)==//
-function searchResults(req, res){
+function searchResults(req, res) {
   // console.log('req.body@ searchResults:server.js-->', req.body)//[x] returns:{search : 'meatloaf'}
   const spoonUrl = 'https://api.spoonacular.com/recipes/search';
   const query = new RecipeCard.Query(req);
-  
+
   superagent.get(spoonUrl)
-    .set( 'Content-Type', 'application/json')
+    .set('Content-Type', 'application/json')
     .accept('application/json')
     .query(query)
     .then(list => compileList(list))
@@ -75,30 +75,30 @@ function searchResults(req, res){
 };
 
 //== Runs response from api through constructor and returns: array of object literals. 
-function compileList(list){
+function compileList(list) {
   //[x] console.log('list.body.results[0] @ compileList:server.js-->', list.body.results[0]);
   const menu = list.body.results.map(curr => new RecipeCard(curr))
-  return menu; 
+  return menu;
 }
 
 //== passes object literal to the show route for use by ejs. returns: objectLiteral format--> { list : [ {},{}...{} ] }. 
-function renderMenu(res, menu){
+function renderMenu(res, menu) {
   // console.log('menu @renderMenu:server.js', menu)
-  res.render('./pages/show', {'list' : menu , 'showResults': true});
+  res.render('./pages/show', { 'list': menu, 'showResults': true });
 }
 //==!!! FUNCTION TO APPLY SECURED PROTOCOL TO URLS=== inputReq: url <string> !!!//
 //
-function httpSecure(url){
-  if(url.charAt(4) !== 's'){  
-   return `https${url.slice(4)}` 
+function httpSecure(url) {
+  if (url.charAt(4) !== 's') {
+    return `https${url.slice(4)}`
   } else {
     return url;
   }
- }
+}
 
- //!!! == ERROR HANDLER !!! inputReq: error from .catch, req, res, and the correct path as a string. 
-function errorCatch(req, res, error, path){
-  res.render(`${path}`, {'error': error});
+//!!! == ERROR HANDLER !!! inputReq: error from .catch, req, res, and the correct path as a string. 
+function errorCatch(req, res, error, path) {
+  res.render(`${path}`, { 'error': error });
 }
 
 
@@ -110,10 +110,6 @@ app.post('/save', saveRecipe);
 app.delete('/delete', deleteRecipe);
 app.get('/my-superdex', showSaved);
 // app.get('/results', showSearchResults);
-app.get('/about', (request, response) => {
-  response.render('pages/about_us');
-});
-
 
 //functions
 
@@ -148,13 +144,13 @@ function deleteRecipe(req, res) {
 }
 
 
-const marlene = { name: 'Marlene Rinker', image: 'styles/imgs/MRinker_photo.jpeg', bio: 'I’m a Full-stack JavaScript software developer with a background in instructional design, technical writing, QA, and accounting. I love collaborating with others to create a great customer experience. In my past roles, I helped customers though documentation, training, and testing. Now, as a software developer, I get to help customers by influencing how the software is built.' };
+const marlene = { name: 'Marlene Rinker', image: 'styles/imgs/MRinker_photo.jpeg', bio: 'I’m a Full-stack JavaScript software developer with a background in instructional design, technical writing, QA, and accounting. I love collaborating with others to create a great customer experience. In my past roles, I helped customers though documentation, training, and testing. Now, as a software developer, I get to help customers by influencing how the software is built.', link: 'https://www.linkedin.com/in/marlenerinker/' };
 
-const mason = { name: 'Mason Fryberger', image: 'styles/imgs/Mason.jpeg', bio: 'RTS gamer (the real kind, not mobile wannabes) Nickname from construction crew \"fishhook\", Favorite quote right now: "sometimes you win, sometimes you learn, fail forward" ~John C Maxwell~' };
+const mason = { name: 'Mason Fryberger', image: 'styles/imgs/Mason.jpeg', bio: 'RTS gamer (the real kind, not mobile wannabes) Nickname from construction crew \"fishhook\", Favorite quote right now: "sometimes you win, sometimes you learn, fail forward" ~John C Maxwell~', link: 'https://www.linkedin.com/in/mason-fryberger-ghub-mason-chance/' };
 
-const david = { name: 'David Palagashvili', image: 'styles/imgs/David.jpg', bio: '' };
+const david = { name: 'David Palagashvili', image: 'styles/imgs/David.jpg', bio: 'I aim to join the ranks of a company with a national, if not global, vision for a better products, better business, and better service. Raised on 2 continents, 3 Countries, 4 Cities, 6 schools; the choice was sink or swim... and I swam. From food service to sales to middle management, I\'ve worked in several industries and held various positions to learn that a major key to success in any business is to stay at the forefront of technological development. This is evident in the exploits of companies like Amazon, Google, and Tesla to name a few. Such companies are pioneers in their own right and I wish to add to what they\'re accomplishing and help take it even further!', link: 'https://www.linkedin.com/in/david-palagashvili-35040ab0/' };
 
-const wolfe = { name: 'Dave Wolfe', image: 'styles/imgs/Dave.jpg', bio: 'I am a Full Stack JavaScript Developer with a background in sales, customer service, and Quality Assurance for mobile and desktop applications. I’ve owned my own business, volunteered for professional and non-professional organizations, and have experience organizing and running large events. I’m looking for a position as a front end developer, where I can utilize my skills to work directly with internal and external customers, to develop quality software. In my personal life I’m passionate about riding and working on my motorcycle.' };
+const wolfe = { name: 'Dave Wolfe', image: 'styles/imgs/Dave.jpg', bio: 'I am a Full Stack JavaScript Developer with a background in sales, customer service, and Quality Assurance for mobile and desktop applications. I’ve owned my own business, volunteered for professional and non-professional organizations, and have experience organizing and running large events. I’m looking for a position as a front end developer, where I can utilize my skills to work directly with internal and external customers, to develop quality software. In my personal life I’m passionate about riding and working on my motorcycle.', link: 'https://www.linkedin.com/in/dave-wolfe623/' };
 
 function randomBios() {
   const bioArr = [marlene, mason, david, wolfe];
@@ -184,23 +180,23 @@ function randomBios() {
 
 
 
-function showSaved (req, res){
+function showSaved(req, res) {
   const sqlQuery = 'SELECT * FROM recipes';
   client.query(sqlQuery)
     .then(resultFromSql => {
       console.log(resultFromSql.rows);
-      res.render('pages/show',{list : resultFromSql.rows, showResults: false});
+      res.render('pages/show', { list: resultFromSql.rows, showResults: false });
     });
 }
 
 
-
+const bios = randomBios();
 
 app.get('/about', (request, response) => {
-  response.render('pages/about_us', {'bioArray': bios});
+  response.render('pages/about_us', { 'bioArray': bios });
 });
 
 
 app.listen(PORT, console.log(`running on ${PORT}`));
 
-const bios = randomBios();
+
