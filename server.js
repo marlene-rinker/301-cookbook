@@ -41,9 +41,13 @@ app.get('/about', (request, response) => {
 });
 // app.get('/results', showSearchResults);
 
-//=== the functions contained within will be later extracted into a module. 
+//=== the functions contained within will be later extracted into a module. functions marked with [x] need no refactoring for modulation. 
 
-//== Constructor for Recipe Object ==//
+function showHome(req, res) {
+  res.render('pages/index.ejs');
+}
+
+//==[x] Constructor for Recipe Object ==//
 // image size options 90x90, 240x150, 312x150
 
 function RecipeCard(apiObj){
@@ -57,20 +61,17 @@ function RecipeCard(apiObj){
   
 }
 
-//== Constructor Method for Query Object ==//
-
+//==[x] Constructor Method for Query Object ==//
 RecipeCard.Query = function (req, res){
   this.apiKey = process.env.SPOONACULAR_API_KEY;
   this.query = req.body.search;
   this.number = 1; // may be made dynamic if future patches allow filtering number of results. 
 }
 
-
-//=== !!! Callback for app.post(/search)==//
+//===[x] Callback for app.post(/search)==//
 function searchResults(req, res){
   const spoonUrl = 'https://api.spoonacular.com/recipes/search';
   const query = new RecipeCard.Query(req);
-  
   superagent.get(spoonUrl)
     .set( 'Content-Type', 'application/json')
     .accept('application/json')
@@ -80,45 +81,20 @@ function searchResults(req, res){
     .catch(error => errorCatch(req, res, error, 'pages/error.ejs'))
 };
 
-//== Runs response from api through constructor and returns: array of object literals. 
+//== [x] Runs response from api through constructor and returns: array of object literals. 
 function compileList(list){
   const menu = list.body.results.map(curr => new RecipeCard(curr))
   return menu; 
 }
 
-//== passes object literal to the show route for use by ejs. returns: objectLiteral format--> { list : [ {},{}...{} ] }. 
+//== [x] Sends results from API  to show.ejs //
 function renderMenu(res, menu){
   // console.log('menu @renderMenu:server.js', menu)
   res.render('./pages/show', {'list' : menu , 'showResults': true});
 }
 
 
-
-//functions Renders Home page//
-function showHome(req, res) {
-  res.render('pages/index.ejs');
-}
-
-function saveRecipe(req, res) {
-  const sqlQuery = 'INSERT INTO recipes (title, image, sourceUrl, readyInMinutes, servings, api_id) VALUES ($1, $2, $3, $4, $5, $6)';
-  const sqlValues = [req.body.title, req.body.image, req.body.sourceUrl, req.body.readyInMinutes, req.body.servings, req.body.id];
-  client.query(sqlQuery, sqlValues)
-    .then(() => {
-      res.send();
-    })
-    .catch(error => errorCatch(req, res, error, 'pages/error.ejs'));
-}
-
-function deleteRecipe(req, res) {
-  console.log('deleting from server');
-  console.log(req.body.id);
-  client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
-    .then(() => {
-      res.send()
-    })
-    .catch(error => .catch(error => errorCatch(req, res, error, 'pages/error.ejs')));
-}
-
+//!!!TODO: modulation requires small refactoring, mostly turning the anonymous arrow function @ app.get('/about') into a callback that calls the randomBios function and returns it's result to the page using it's existing res.render() method and path. 
 const marlene = { name: 'Marlene Rinker', image: 'styles/imgs/MRinker_photo.jpeg', bio: 'I’m a Full-stack JavaScript software developer with a background in instructional design, technical writing, QA, and accounting. I love collaborating with others to create a great customer experience. In my past roles, I helped customers though documentation, training, and testing. Now, as a software developer, I get to help customers by influencing how the software is built.' };
 
 const mason = { name: 'Mason Fryberger', image: 'styles/imgs/Mason.jpeg', bio: 'RTS gamer (the real kind, not mobile wannabes) Nickname from construction crew \"fishhook\", Favorite quote right now: "sometimes you win, sometimes you learn, fail forward" ~John C Maxwell~' };
@@ -152,6 +128,31 @@ function randomBios() {
   return newArr;
 }
 
+const bios = randomBios();
+
+//!!! ready for modulation, no re-factor required.
+function saveRecipe(req, res) {
+  const sqlQuery = 'INSERT INTO recipes (title, image, sourceUrl, readyInMinutes, servings, api_id) VALUES ($1, $2, $3, $4, $5, $6)';
+  const sqlValues = [req.body.title, req.body.image, req.body.sourceUrl, req.body.readyInMinutes, req.body.servings, req.body.id];
+  client.query(sqlQuery, sqlValues)
+    .then(() => {
+      res.send();
+    })
+    .catch(error => errorCatch(req, res, error, 'pages/error.ejs'));
+}
+
+//!!!Ready for modulation, no re-factor required. 
+function deleteRecipe(req, res) {
+  console.log('deleting from server');
+  console.log(req.body.id);
+  client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
+    .then(() => {
+      res.send()
+    })
+    .catch(error => errorCatch(req, res, error, 'pages/error.ejs'));
+}
+
+
 function showSaved (req, res){
   const sqlQuery = 'SELECT * FROM recipes';
   client.query(sqlQuery)
@@ -159,7 +160,7 @@ function showSaved (req, res){
       console.log(resultFromSql.rows);
       res.render('pages/show',{list : resultFromSql.rows, showResults: false});
     })
-    .catch(error => .catch(error => errorCatch(req, res, error, 'pages/error.ejs')));
+    .catch(error => errorCatch(req, res, error, 'pages/error.ejs'));
 }
 
 //==!!! FUNCTION TO APPLY SECURED PROTOCOL TO URLS=== inputReq: url <string> !!!//
@@ -177,7 +178,7 @@ function httpSecure(url){
   res.render(`${path}`, {'error': error});
 }
 
-const bios = randomBios();
+
 
 
 
