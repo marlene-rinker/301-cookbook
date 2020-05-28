@@ -1,59 +1,27 @@
 <!-- this is the home page -->
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/styles/reset.css"/>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Lato|Merriweather" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/style.css"/>
-  <link rel="stylesheet" href="/styles/base.css"/>
-  <link rel="stylesheet" href="/styles/layout.css"/>
-  <link rel="stylesheet" href="/styles/modules.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="app.js"></script>
-  <title>Superdex Cookbook</title>
-</head>
+<%- include('layout/head.ejs') %>
 
 <body>
     <%- include('layout/header.ejs') %>
 
-    <section id="user-guide">
-        <div class="box">
-            <p> Welcome to SuperDex CookBook </p>
-        </div>
+    <section>
+    
+        <p> Welcome to SuperDex CookBook </p>
+        
     </section>
 
-    <section id="interface">
+    <section>
 
-        <div class="wrapper">
-            
-            <div class="box">
-            
-                <form action="/search" method="POST">
-                    <fieldset id="search">
+        <form action="/search" method="POST">
+            <fieldset id="search">
+                <legend> Search for Recipes </legend>
+                <label for="search"> Enter Your Search Here </label>
+                <input type="text" name="search" required>
 
-                        <legend> Search for Recipes </legend>
-                        <label for="search"> Enter Your Search Here </label>
-                        <input type="text" name="search" required>
-
-                     
-
-                        <input type="submit" value="Search"/>
-            
-                    </fieldset>
-                </form>
-                
-            </div>
-
-            <div class="box">
-                <a href="/pages/show" rel="access-cookBook"> My SuperDex </a>
-            </div>
-            
-        </div>
+                <input type="submit" value="Search"/>
+            </fieldset>
+        </form>
 
     </section>
 
