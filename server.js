@@ -22,6 +22,8 @@ client.connect();
 app.get('/', showHome);
 app.post('/save', saveRecipe);
 app.delete('/delete', deleteRecipe);
+app.get('/my-superdex', showSaved);
+// app.get('/results', showSearchResults);
 app.get('/about', (request, response) => {
   response.render('pages/about_us');
 });
@@ -41,18 +43,31 @@ function saveRecipe(req, res) {
       res.send();
     })
     .catch(error => {
-      errorCatch(req, res, error, 'pages/error.ejs');
+      // errorCatch(req, res, error, 'pages/error.ejs');
+      console.log(error);
     })
 }
 
 function deleteRecipe(req, res) {
+  console.log('deleting from server');
+  console.log(req.body.id);
   client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
     .then(() => {
       res.send()
     })
     .catch(error => {
-      errorCatch(req, res, error, 'pages/error.ejs');
+      // errorCatch(req, res, error, 'pages/error.ejs');
+      console.log(error);
     })
+}
+
+function showSaved (req, res){
+  const sqlQuery = 'SELECT * FROM recipes';
+  client.query(sqlQuery)
+    .then(resultFromSql => {
+      console.log(resultFromSql.rows);
+      res.render('pages/show',{list : resultFromSql.rows, showResults: false});
+    });
 }
 
 
