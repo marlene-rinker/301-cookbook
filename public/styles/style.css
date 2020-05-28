@@ -4,9 +4,17 @@
 
 /* Header and Menu Styling */ 
 
-* {
-    padding: 0;
-    margin: 0;
+body {
+    display: grid;
+    margin-top: 15;
+    font-family: 'Lato', sans-serif;
+    background-color: #999393;
+}
+
+section {
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 li {
@@ -18,13 +26,10 @@ a {
     color: #000;
 }
 
-body {
-    font-family: 'Lato', sans-serif;
-    background-color: #999393;
-}
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
     font-family: 'Merriweather', serif;
+    grid-column: 3;
 }
 
 .header {
@@ -33,6 +38,7 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-rows: 70px auto;
     align-items: center;
     background-color: rgb(172, 214, 35);
+    margin-bottom: 25px;
 }
 
 .logo {

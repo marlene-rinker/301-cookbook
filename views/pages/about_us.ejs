@@ -1,42 +1,38 @@
 <!-- this is the about us page -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+
+<%- include('layout/head.ejs') %>
+
 <body>
   <%- include('layout/header.ejs') %>
 
   
-  <div style="background-image: url('styles/imgs/recipe_card.png');">
+  <section class="bio">
     <p><%= bioArray[0].name %></p>
     <img src="<%= bioArray[0].image %>" style="height: 100px;"/>
     <p><%= bioArray[0].bio %></p>
     <a href=<%= bioArray[0].link %>>LinkedIn</a>
-  </div>
+  </section>
 
-  <div style="background-image: url('styles/imgs/recipe_card.png');">
+  <section class="bio">
     <p><%= bioArray[1].name %></p>
     <img src="<%= bioArray[1].image %>" style="height: 100px;"/>
     <p><%= bioArray[1].bio %></p>
     <a href=<%= bioArray[1].link %>>LinkedIn</a>
-  </div>
+  </section>
 
-  <div style="background-image: url('styles/imgs/recipe_card.png');">
+  <section class="bio">
     <p><%= bioArray[2].name %></p>
     <img src="<%= bioArray[2].image %>" style="height: 100px;"/>
     <p><%= bioArray[2].bio %></p>
     <a href=<%= bioArray[2].link %>>LinkedIn</a>
-  </div>
+  </section>
 
-  <div style="background-image: url('styles/imgs/recipe_card.png');">
+  <section class="bio">
     <p><%= bioArray[3].name %></p>
     <img src="<%= bioArray[3].image %>" style="height: 100px;"/>
     <p><%= bioArray[3].bio %></p>
     <a href=<%= bioArray[3].link %>>LinkedIn</a>
-  </div>
+  </section>
 
 
 
