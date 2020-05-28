@@ -1,18 +1,64 @@
-<!-- this page will show the saved recipes to the user - it will use the card.ejs to display the recipe information  -->
+
+<!-- this page will show the saved recipes and the result recipes to the user  -->
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>show</title>
+
+  <title>Document</title>
 </head>
 <body>
+  <p id="message">Message</p>
+  <% if(showResults) { %>
+    <p>Here's what we found. Click See Details to find out all about the recipe. Click Save Recipe to save it to your Superdex so you can quickly find it later.</p>
 
+  <% } %>
+
+  <% if(showResults === false) { %>
+    <p>Here's your Superdex, your custom cookbook of recipes you've saved. See details for any of your recipes. Delete recipes you don't want to use anymore.</p>
+
+  <% } %>
+
+  <% list.forEach(recipe => { %>
   <section>
-    <%console.log('list', list)%>
-    <h1><%= list[0].title %></h1>
-  </section>
+      <h2><%=recipe.title %></h2>
+      <img src="<%=recipe.image %>"</p>
+      <a href="<%= recipe.sourceurl %>"target="_blank">See details</a>
+      <p><%= recipe.readyinminutes %></p>
+      <p><%=recipe.servings %></p>
+
+    <% if(showResults) { %>
+    <!-- This form goes with each recipe on the results view. We'll need to use .ejs to put in the values. -->
+    <form id="save-form" action="/save" method="POST">
+      <input type="hidden", name="title", value="<%=recipe.title %>">
+      <input type="hidden", name="image", value="<%=recipe.image %>">
+      <input type="hidden", name="sourceUrl", value="<%= recipe.sourceurl %>">
+      <input type="hidden", name="readyInMinutes", value="<%= recipe.readyinminutes %>">
+      <input type="hidden", name="servings", value="<%=recipe.servings %>">
+      <input type="hidden", name="api_id", value="<%=recipe.api_id %>">
+      <input type="submit" value="Save Recipe">
+  </form>
+  <% } %>
+
+  <% if (showResults === false) { %>
+  <!-- This form goes with each recipe on the saved recipes view. We'll need to use .ejs to put in the values. -->
+  <form id="delete-form" action="/delete?_overrideMethod=DELETE" method="POST">
+    <input type="hidden", name="id", value="<%=recipe.id %>">
+    <input type="hidden", name="title", value="<%=recipe.title %>">
+    <input type="submit", value="Delete Recipe">
+  </form>
+  <% } %>
+  
+</section>
+<% }); %>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="/app.js"></script>
   
 </body>
 </html>
+
+

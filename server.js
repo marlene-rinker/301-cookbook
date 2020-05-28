@@ -16,6 +16,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('./public'));
 app.use(methodOverride('_overrideMethod'));
+
 app.use(cors());
 
 
@@ -100,8 +101,61 @@ function errorCatch(req, res, error, path){
   res.render(`${path}`, {'error': error});
 }
 
-app.get('/', (request, response) => {
-    response.render('pages/index');
+
+
+
+//routes
+app.get('/', showHome);
+app.post('/save', saveRecipe);
+app.delete('/delete', deleteRecipe);
+app.get('/my-superdex', showSaved);
+// app.get('/results', showSearchResults);
+app.get('/about', (request, response) => {
+  response.render('pages/about_us');
 });
+
+
+//functions
+
+function showHome(req, res) {
+  res.render('pages/index.ejs');
+}
+
+function saveRecipe(req, res) {
+  const sqlQuery = 'INSERT INTO recipes (title, image, sourceUrl, readyInMinutes, servings, api_id) VALUES ($1, $2, $3, $4, $5, $6)';
+  const sqlValues = [req.body.title, req.body.image, req.body.sourceUrl, req.body.readyInMinutes, req.body.servings, req.body.id];
+  client.query(sqlQuery, sqlValues)
+    .then (() => {
+      res.send();
+    })
+    .catch(error => {
+      // errorCatch(req, res, error, 'pages/error.ejs');
+      console.log(error);
+    })
+}
+
+function deleteRecipe(req, res) {
+  console.log('deleting from server');
+  console.log(req.body.id);
+  client.query('DELETE FROM recipes WHERE id=$1', [req.body.id])
+    .then(() => {
+      res.send()
+    })
+    .catch(error => {
+      // errorCatch(req, res, error, 'pages/error.ejs');
+      console.log(error);
+    })
+}
+
+function showSaved (req, res){
+  const sqlQuery = 'SELECT * FROM recipes';
+  client.query(sqlQuery)
+    .then(resultFromSql => {
+      console.log(resultFromSql.rows);
+      res.render('pages/show',{list : resultFromSql.rows, showResults: false});
+    });
+}
+
+
 
 app.listen(PORT, console.log(`running on ${PORT}`));
