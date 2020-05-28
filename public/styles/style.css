@@ -1,0 +1,82 @@
+/* #menuLinks {
+    display: none;
+} */
+
+/* Header and Menu Styling */ 
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #999393;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Merriweather', serif;
+}
+
+.header {
+    display: grid;
+    grid-template-columns: 7vw 1fr 10fr 1fr 2vw;
+    grid-template-rows: 70px auto;
+    align-items: center;
+    background-color: rgb(172, 214, 35);
+}
+
+.logo {
+    grid-column: 1;
+}
+
+.main-nav {
+    grid-column: 3;
+}
+
+.hamburger {
+    grid-column: 4;
+    justify-self: end;
+}
+
+.main-nav ul {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    justify-items: center;
+}
+
+.fa-bars {
+    font-size: 1.4em;
+}
+
+.logo img {
+    display: grid;
+    height: 70px;
+}
+
+@media screen and (max-width: 700px) {
+    .main-nav {
+        grid-row: 2;
+        grid-column: 2 / 5;
+        background-color: #000;
+    }
+    .main-nav ul a {
+        color: #fff;
+    }
+    .main-nav ul {
+        grid-template-columns: 1fr;
+        height: calc(80vh - 70px);
+        align-content: space-evenly;
+    }
+}
+
+.main-nav { display: none; }
