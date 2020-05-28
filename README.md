@@ -10,9 +10,33 @@ Dave Wolfe, David Palagashvili, Marlene Rinker, Mason Fryberger
 The Digital Cookbook is an app that allows you to find recipes and save them for easy reference.
 
 ## Getting Started
-<!-- TODO: as app is developed, explain setup here - packages to install, what to put in the .env file, what API is used and if you need a key, maybe other things -->
 
-Coming soon!
+```environment variables
+PORT=3001
+DATABASE_URL=postgres://localhost:5432/<name of your database>
+SPOONACULAR_API_KEY=<get api key from spoonacular.com and put it here>
+  ```
+  Packages to install:
+
+    "cors"
+    "dotenv"
+    "ejs"
+    "express"
+    "method-override"
+    "node"
+    "pg"
+    "superagent"
+
+  API: [spoonacular API](https://spoonacular.com/food-api)  
+
+
+
+
+## Resources and Credits
+
+[Alt Images from lorempixel](https://lorempixel.com/)
+
+[Spoontacular API](https://spoonacular.com/)
 
 ## Wireframes
 
