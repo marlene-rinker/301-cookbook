@@ -34,7 +34,7 @@ app.get('/my-superdex', showSaved);
 app.post('/search', searchResults);
 
 app.get('/about', (request, response) => {
-  response.render('pages/about_us', {'bioArray': bios});
+  response.render('pages/about_us', { 'bioArray': bios });
 });
 
 //=== the functions contained within will be later extracted into a module. functions marked with [x] need no refactoring for modulation. 
@@ -47,7 +47,7 @@ function showHome(req, res) {
 //==[x] Constructor for Recipe Object ==//
 // image size options 90x90, 240x150, 312x150
 
-function RecipeCard(apiObj){
+function RecipeCard(apiObj) {
 
   this.title = apiObj.title;
   this.image = apiObj.image ? `https://spoonacular.com/recipeImages/${apiObj.id}-240x150` : 'public/styles/imgs/alt-image-lorempixel.jpg';
@@ -60,7 +60,7 @@ function RecipeCard(apiObj){
 
 //== Constructor Method for Query Object ==//
 
-RecipeCard.Query = function (req, res){
+RecipeCard.Query = function (req, res) {
 
   this.apiKey = process.env.SPOONACULAR_API_KEY;
   this.query = req.body.search;
@@ -68,7 +68,7 @@ RecipeCard.Query = function (req, res){
 }
 
 //===[x] Callback for app.post(/search)==//
-function searchResults(req, res){
+function searchResults(req, res) {
   const spoonUrl = 'https://api.spoonacular.com/recipes/search';
   const query = new RecipeCard.Query(req);
 
@@ -83,7 +83,7 @@ function searchResults(req, res){
 
 //== [x] Runs response from api through constructor and returns: array of object literals. 
 
-function compileList(list){
+function compileList(list) {
 
   const menu = list.body.results.map(curr => new RecipeCard(curr))
   return menu;
@@ -91,17 +91,9 @@ function compileList(list){
 
 //== passes object literal to the show route for use by ejs. returns: objectLiteral format--> { list : [ {},{}...{} ] }.
 //== [x] Sends results from API  to show.ejs //
-function renderMenu(res, menu){
+function renderMenu(res, menu) {
   // console.log('menu @renderMenu:server.js', menu)
-  res.render('pages/show', {'list' : menu , 'showResults': true});
-}
-
-function showSaved (req, res){
-  const sqlQuery = 'SELECT * FROM recipes';
-  client.query(sqlQuery)
-    .then(resultFromSql => {
-      res.render('pages/show',{list : resultFromSql.rows, showResults: false});
-    });
+  res.render('pages/show', { 'list': menu, 'showResults': true });
 }
 
 //code for about us page
@@ -171,7 +163,7 @@ function showSaved(req, res) {
   const sqlQuery = 'SELECT * FROM recipes';
   client.query(sqlQuery)
     .then(resultFromSql => {
-      res.render('pages/show',{list : resultFromSql.rows, showResults: false});
+      res.render('pages/show', { list: resultFromSql.rows, showResults: false });
     })
     .catch(error => errorCatch(req, res, error, 'pages/error.ejs'));
 
@@ -179,17 +171,17 @@ function showSaved(req, res) {
 
 //==!!! FUNCTION TO APPLY SECURED PROTOCOL TO URLS=== inputReq: url <string> !!!//
 
-function httpSecure(url){
-  if(url.charAt(4) !== 's'){  
-   return `https${url.slice(4)}` 
+function httpSecure(url) {
+  if (url.charAt(4) !== 's') {
+    return `https${url.slice(4)}`
   } else {
     return url;
   }
- }
+}
 
- //!!! == ERROR HANDLER !!! inputReq: error from .catch, req, res, and the correct path as a string. 
- function errorCatch(req, res, error, path){
-  res.render(`${path}`, {'error': error});
+//!!! == ERROR HANDLER !!! inputReq: error from .catch, req, res, and the correct path as a string. 
+function errorCatch(req, res, error, path) {
+  res.render(`${path}`, { 'error': error });
 }
 
 app.listen(PORT, console.log(`running on ${PORT}`));
