@@ -1,24 +1,20 @@
-<!-- ejs page with header info to put on each page -->
-<script src="https://kit.fontawesome.com/d99e47f362.js" crossorigin="anonymous"> </script>
-
-<header>
-    <h1> SuperDex Cookbook - Your Recipes, Your Way </h1>
-    
-    <a href="#main-menu" class="menu-toggle">
-        <i class="fa fa-bars"></i>
-    </a>
-    
-    <img src="styles/imgs/kisspng-recipe-cookbook-chef-clip-art-recipe-cliparts-5aa9e0e3528b81.0349312815210825953381.png" class="logo" style="height: 100px;"/>
-
-    <nav id="main-menu" class="main-menu">
-        <a href="#main-menu-toggle" class="menu-close">
-            <i class="fa fa-bars"></i>
-        </a>
-        <ul>
-            <li><a href="pages/index.ejs"> Home </a></li>
-            <li><a href="pages/show.ejs"> My Superdex </a></li>
-            <li><a href="pages/about_us.ejs"> About the Developers </a></li>
-        </ul>
-    </nav>
-    <a href="#main-menu-toggle" class="backdrop" hidden></a>
-</header>
+<div class="main-container">
+    <div class="header">
+        <div class="logo">
+            <img src="styles/imgs/kisspng-recipe-cookbook-chef-clip-art-recipe-cliparts-5aa9e0e3528b81.0349312815210825953381.png" style="height: 100px;"/>
+        </div>
+        <h1> SuperDex Cookbook</h1>
+        <div id="main-nav" class="main-nav">
+            <ul>
+                <li><a href="#pages/index.ejs"> Home </a></li>
+                <li><a href="#pages/show.ejs"> My Superdex </a></li>
+                <li><a href="#pages/about_us.ejs"> About the Developers </a></li>
+            </ul>
+        </div>
+        <div class="hamburger">
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fa fa-bars"></i>
+            </a>
+        </div>
+    </div>
+</div>
